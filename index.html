@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtBoard - Backoffice</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <!-- Écran de connexion -->
+    <div id="login-screen" class="screen active">
+        <div class="login-box">
+            <h1>🎨 ArtBoard</h1>
+            <input type="text" id="username" placeholder="Nom d'utilisateur">
+            <input type="password" id="password" placeholder="Mot de passe">
+            <button type="button" onclick="login()">Connexion</button>
+            <p class="hint">admin / admin</p>
+        </div>
+    </div>
+
+    <!-- Application principale -->
+    <div id="app-screen" class="screen">
+        <nav>
+            <h2>🎨 ArtBoard</h2>
+            <div class="nav-links">
+                <a onclick="showView('dashboard')" class="active">Dashboard</a>
+                <a onclick="showView('artistes')">Artistes</a>
+                <a onclick="showView('oeuvres')">Œuvres</a>
+                <a onclick="showView('expositions')">Expositions</a>
+                <a onclick="logout()">Déconnexion</a>
+            </div>
+        </nav>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="view active">
+            <h3>Tableau de bord</h3>
+            <div class="stats">
+                <div class="stat-card"><h4 id="stat-artistes">0</h4><p>Artistes</p></div>
+                <div class="stat-card"><h4 id="stat-oeuvres">0</h4><p>Œuvres</p></div>
+                <div class="stat-card"><h4 id="stat-expositions">0</h4><p>Expositions</p></div>
+            </div>
+            <canvas id="chart"></canvas>
+        </div>
+
+        <!-- Artistes -->
+        <div id="artistes" class="view">
+            <div class="header">
+                <h3>Gestion des artistes</h3>
+                <button onclick="openModal('artistes')">+ Ajouter</button>
+            </div>
+            <input type="text" placeholder="🔍 Rechercher..." oninput="search('artistes', this.value)">
+            <table id="table-artistes"></table>
+        </div>
+
+        <!-- Œuvres -->
+        <div id="oeuvres" class="view">
+            <div class="header">
+                <h3>Gestion des œuvres</h3>
+                <button onclick="openModal('oeuvres')">+ Ajouter</button>
+            </div>
+            <input type="text" placeholder="🔍 Rechercher..." oninput="search('oeuvres', this.value)">
+            <table id="table-oeuvres"></table>
+        </div>
+
+        <!-- Expositions -->
+        <div id="expositions" class="view">
+            <div class="header">
+                <h3>Gestion des expositions</h3>
+                <button onclick="openModal('expositions')">+ Ajouter</button>
+            </div>
+            <input type="text" placeholder="🔍 Rechercher..." oninput="search('expositions', this.value)">
+            <table id="table-expositions"></table>
+        </div>
+    </div>
+
+    <!-- Modal CRUD -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 id="modal-title"></h3>
+            <form id="crud-form" onsubmit="submitForm(event)"></form>
+        </div>
+    </div>
+
+    <!-- Modal confirmation -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h3>Confirmer la suppression ?</h3>
+            <div class="modal-actions">
+                <button onclick="confirmDelete()">Oui</button>
+                <button onclick="closeConfirm()">Non</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
